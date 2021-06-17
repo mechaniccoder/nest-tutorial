@@ -8,8 +8,9 @@ export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Get()
-  async findAll(@Query() query: ListAllCats): Promise<Cat[]> {
-    return this.catsService.findAll(Number(query.limit));
+  async findAll(@Query() query: ListAllCats): Promise<Cat[] | string> {
+    console.log(query);
+    return this.catsService.findAll();
   }
 
   @Post()

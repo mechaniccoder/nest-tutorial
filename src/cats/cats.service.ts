@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCatDto } from './dto';
 import { Cat } from './interfaces/cat.interface';
 
@@ -8,15 +8,23 @@ export class CatsService {
   private readonly cats: Cat[] = [];
 
   create(cat: CreateCatDto) {
-    const newCat = {
-      id: String(this.id++),
-      ...cat,
-    };
-    this.cats.push(newCat);
+    throw new NotFoundException('Failed to create new cat');
+    // const newCat = {
+    //   id: String(this.id++),
+    //   ...cat,
+    // };
+    // this.cats.push(newCat);
   }
 
-  findAll(limit: number): Cat[] {
-    return this.cats.slice(0, limit);
+  findAll(): Cat[] | string {
+    return [
+      {
+        age: 10,
+        id: '1',
+        breed: 'dd',
+        name: 'sh',
+      },
+    ];
   }
 
   getOne(id: string) {
