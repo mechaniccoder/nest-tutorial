@@ -1,7 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto, ListAllCats, UpdateCatDto } from './dto';
 import { Cat } from './interfaces/cat.interface';
+import { ValidationPipe } from './pipe/validation.pipe';
 
 @Controller('cats')
 export class CatsController {
@@ -19,7 +31,7 @@ export class CatsController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
+  getOne(@Param('id', new DefaultValuePipe(1), ParseIntPipe) id: number) {
     return `get ${id} cat`;
   }
 
