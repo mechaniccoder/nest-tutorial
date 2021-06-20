@@ -11,9 +11,10 @@ import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '../config/config.module';
 
 @Module({
-  imports: [CatsModule, UserModule, AuthModule],
+  imports: [CatsModule, UserModule, AuthModule, ConfigModule.register()],
   controllers: [AppController],
   providers: [
     AppService,
