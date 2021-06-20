@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { AuthModule } from 'src/auth/auth.module';
 import { UserService } from './user.service';
 
 @Module({
+  imports: [AuthModule],
   providers: [UserService],
   /**
    * provider는 기본적으로 모듈에 의해 encapsulating되어있다.

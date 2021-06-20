@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from 'src/user/user.module';
+import { AuthService } from './auth.service';
 
 @Module({
   /**
@@ -10,5 +11,6 @@ import { UserModule } from 'src/user/user.module';
    * 이를 static module binding이라 한다.
    */
   imports: [UserModule],
+  exports: [AuthService],
 })
 export class AuthModule {}
