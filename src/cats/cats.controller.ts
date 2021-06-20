@@ -9,13 +9,17 @@ import {
   Patch,
   Post,
   Query,
+  Scope,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto, ListAllCats, UpdateCatDto } from './dto';
 import { Cat } from './interfaces/cat.interface';
 import { ValidationPipe } from './pipe/validation.pipe';
 
-@Controller('cats')
+@Controller({
+  path: 'cats',
+  scope: Scope.REQUEST,
+})
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
