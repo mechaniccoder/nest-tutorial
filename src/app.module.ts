@@ -9,9 +9,11 @@ import { CatsModule } from './cats/cats.module';
 import { ValidationPipe } from './cats/pipe/validation.pipe';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { LoggerMiddleware } from './middleware/logger.middleware';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [CatsModule],
+  imports: [CatsModule, UserModule, AuthModule],
   controllers: [AppController],
   providers: [
     AppService,
