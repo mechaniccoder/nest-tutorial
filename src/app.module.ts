@@ -1,5 +1,7 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, Options } from '@nestjs/common';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { createConnection } from 'net';
+import { async } from 'rxjs';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsController } from './cats/cats.controller';
@@ -20,6 +22,14 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
+    },
+    {
+      provide: 'ASYNC_CONNECTION',
+      // ASYNC_CONNECTION 토큰을 가지고 있는 provider들은 factory 함수가 connection을 resolve할 때 까지 이를 instantiating하지 않는다.
+      useFactory: async () => {
+        const connection = await createConnection({});
+        return connection;
+      },
     },
   ],
 })
