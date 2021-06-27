@@ -9,9 +9,13 @@ export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>, private connection: Connection) {}
 
   async createOne(user: CreateUserDto): Promise<User> {
-    console.log(user);
     const newUser = await this.userRepository.create(user);
     await this.userRepository.save(newUser);
     return newUser;
+  }
+
+  async findOne(id: number): Promise<User> {
+    const user = await this.userRepository.findOne(id);
+    return user;
   }
 }

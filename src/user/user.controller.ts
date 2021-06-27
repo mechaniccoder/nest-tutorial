@@ -1,9 +1,11 @@
-import { Body, Get, Param, Post } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
+import { Expose } from 'class-transformer';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -15,9 +17,9 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: number) {
     // global validation pipe transform 속성을 설정해주면 자동으로 타입변환해준다.
-    console.log(typeof id === 'number');
-    return 'find one';
+    const user = await this.userService.findOne(id);
+    return user;
   }
 }
