@@ -4,9 +4,8 @@ import cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ['log', 'debug', 'error', 'warn'],
-  });
+  const app = await NestFactory.create(AppModule);
+
   app.useGlobalPipes(new ValidationPipe()); // auto-validation
   app.use(cookieParser());
   await app.listen(3000);

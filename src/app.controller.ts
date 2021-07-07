@@ -18,22 +18,10 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService, @Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
-  @CacheKey('hello')
-  @CacheTTL(10)
   @Get()
-  async getHello(): Promise<string> {
-    const value = await this.cacheManager.get('apiKey');
-    if (!value) {
-      await this.cacheManager.set(
-        'apiKey',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
-        {
-          ttl: 1000,
-        },
-      );
-      return 'key generated';
-    }
-    return value as string;
+  async createJob(): Promise<string> {
+    this.appService.createJob();
+    return 'create job';
   }
 
   @Get('cookie')

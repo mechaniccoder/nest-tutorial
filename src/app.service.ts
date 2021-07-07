@@ -1,8 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import { Injectable, Logger } from '@nestjs/common';
+import { Queue } from 'bull';
+import { TodoConsumer } from './app.consumer';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
+  private readonly logger = new Logger(AppService.name);
+
+  constructor(@InjectQueue('todo') private todoQueue: Queue, private todoConsumer: TodoConsumer) {}
+
+  async createJob() {
+    this.logger.debug('start to enqueue job to redis');
+    const job = await this.todoQueue.add({
+      text: 'learning nest',
+    });
+
     return 'Hello World!';
   }
 }
